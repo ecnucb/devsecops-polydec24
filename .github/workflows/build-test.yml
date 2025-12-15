@@ -10,11 +10,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: rm -f .npmrc 
-      - run: rm -f ~/.npmrc
-      - run: npm config set registry https://registry.npmjs.org/
-      - run: npm config delete proxy
-      - run: npm config delete https-proxy
+      - run: npm config set proxy false
+      - run: npm cache clean --force
+      - run: npm config set registry http://registry.npm.taobao.org/
       - run: npm install 
       - run: npm run build
 
@@ -28,5 +26,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: npm install --registry=https://registry.npmjs.org/
+      - run: npm config set proxy false
+      - run: npm cache clean --force
+      - run: npm config set registry http://registry.npm.taobao.org/
+      - run: npm install 
       - run: npm test
