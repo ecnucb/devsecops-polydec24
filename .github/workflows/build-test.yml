@@ -1,13 +1,16 @@
 name: Build and Test
-on: [push]
+on: push
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: use node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18.x'
+      - run: npm config set registry https://registry.npmjs.org/
       - run: npm install
       - run: npm run build
 
@@ -15,9 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: use node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18.x'
+      - run: npm config set registry https://registry.npmjs.org/
       - run: npm install
       - run: npm test
